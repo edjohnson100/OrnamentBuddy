@@ -43,6 +43,7 @@ Installers/*.msi
 Installers/*.pkg
 Installers/*.dmg
 Installers/*.zip
+Installers/*.wixpdb
 Installers/Output/
 
 # Ignore compiled binaries just in case they slip into other folders
