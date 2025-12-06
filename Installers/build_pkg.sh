@@ -2,43 +2,49 @@
 set -e
 
 # ==============================================================================
-# 📝 CONFIGURATION (edit this section)
+# 統 CONFIGURATION (edit this section)
 # ==============================================================================
+# ⭐️ IMPORTANT: Update these three variables for each project ⭐️
 APP_NAME="OrnamentBuddy"                 
+# AddIns or Scripts
+APP_TYPE="AddIns"
 IDENTIFIER="com.makingwithanedj.ornamentbuddy"         
 VERSION="1.0"
 # ==============================================================================
 
 # GET PARENT FOLDER NAME
-# We assume the script is in /Repo/Installers/
-# So ".." is /Repo/
+# We assume the script is in /[Repo Name]/Installers/
+# So ".." is /[Repo Name]/
 REPO_ROOT=".."
 FOLDER_NAME=$(basename "$(cd "$REPO_ROOT" && pwd)")
-INSTALL_LOCATION="Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/$FOLDER_NAME"
+INSTALL_LOCATION="Library/Application Support/Autodesk/Autodesk Fusion 360/API/$APP_TYPE/$FOLDER_NAME"
+
+# Define the final output name using the desired convention
+FINAL_PACKAGE_NAME="${APP_NAME}Installer_Mac.pkg"
 
 echo "=========================================="
 echo "      MAC USER-ONLY INSTALLER BUILDER"
 echo "=========================================="
 
 # 1. CLEANUP OLD BUILDS
-rm -f "$APP_NAME.pkg"
+rm -f "$FINAL_PACKAGE_NAME" # Updated to remove the dynamically named file
 rm -f "component.pkg"
 rm -f "distribution.xml"
 rm -rf "staging_area"
 
 # 2. CREATE STAGING AREA (To exclude 'Installers' folder from the build)
-echo "📦 Staging files..."
+echo "逃 Staging files..."
 mkdir -p "staging_area"
 # Copy everything from Parent to Staging, excluding specific items
 rsync -av --exclude='Installers' --exclude='.git' --exclude='.gitignore' --exclude='.DS_Store' --exclude='__pycache__' "$REPO_ROOT/" "staging_area/"
 
 # 3. PERMISSIONS FIX
-echo "🔧 Fixing permissions..."
+echo "肌 Fixing permissions..."
 find "staging_area" -type f -exec chmod 644 {} \;
 find "staging_area" -type d -exec chmod 755 {} \;
 
 # 4. BUILD COMPONENT
-echo "📦 Building Component..."
+echo "逃 Building Component..."
 pkgbuild --root "staging_area" \
          --identifier "$IDENTIFIER" \
          --version "$VERSION" \
@@ -46,7 +52,7 @@ pkgbuild --root "staging_area" \
          component.pkg
 
 # 5. GENERATE DISTRIBUTION XML
-echo "📝 Generating XML..."
+echo "統 Generating XML..."
 cat <<EOF > distribution.xml
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="1">
@@ -67,10 +73,10 @@ cat <<EOF > distribution.xml
 EOF
 
 # 6. BUILD FINAL INSTALLER
-echo "💿 Creating Final Installer..."
+echo "珍 Creating Final Installer..."
 productbuild --distribution distribution.xml \
              --package-path . \
-             "$APP_NAME.pkg"
+             "$FINAL_PACKAGE_NAME" # <--- Uses the dynamic name variable
 
 # 7. CLEANUP
 rm component.pkg
@@ -78,5 +84,5 @@ rm distribution.xml
 rm -rf "staging_area"
 
 echo "=========================================="
-echo "✅ SUCCESS! Installer created: $APP_NAME.pkg"
+echo "笨 SUCCESS! Installer created: $FINAL_PACKAGE_NAME"
 echo "=========================================="
