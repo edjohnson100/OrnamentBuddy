@@ -1,7 +1,7 @@
 # Ornament Buddy
 **Rapidly configure and export personalized ornaments.**
 
-![Ornament Buddy Icon](resources/OrnamentBuddyAppIcon.png)
+<img src="OrnamentBuddyAppIcon.png" alt="Ornament Buddy Icon" style="width:33%; height:auto;">
 
 ## Introduction: The "Why" and "What"
 Let's be honest: manually editing a sketch to change a name, then hunting through the timeline to suppress and unsuppress different background patterns for every single ornament order is a tedious nightmare. I built this tool because I wanted to spend less time clicking through menus and more time printing.
