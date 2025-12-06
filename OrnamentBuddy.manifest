@@ -1,0 +1,14 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"addin",
+	"id":	"FCFF07C9-CF83-4ED8-ACEA-873A79F3D68A",
+	"author":	"Ed Johnson (Making With An EdJ)",
+	"description":	{
+		"":	"Rapidly configure and export personalized ornaments."
+	},
+	"version":	"1.0.0",
+	"runOnStartup":	false,
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true,
+	"iconFilename":	"OrnamentBuddyAppIcon.png"
+}
