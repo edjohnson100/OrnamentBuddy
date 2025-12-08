@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('edj_orn_theme', newTheme);
     });
 
+    // --- PREVIEW LOGIC ---
+    const previewSwitch = document.getElementById('preview-checkbox');
+    previewSwitch.addEventListener('change', togglePreview);
+
     // --- EVENT LISTENERS ---
     document.getElementById('refreshBtn').addEventListener('click', refreshData);
     document.getElementById('browseBtn').addEventListener('click', selectFolder);
@@ -23,6 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 let currentData = {};
 let currentFolder = "";
+let isLivePreview = true; // Default to ON
+
+function togglePreview(e) {
+    isLivePreview = e.target.checked;
+    
+    // If turning ON, force a sync immediately to catch up any changes made while off
+    if (isLivePreview) {
+        // Force update without delay
+        const text = document.getElementById('nameInput').value;
+        const height = document.getElementById('heightInput').value;
+        sendToFusion('update_text', { text: text, height: height });
+    }
+}
 
 // --- CONNECTION MANAGER ---
 
@@ -34,7 +51,6 @@ function waitForFusion() {
                     var parsed = typeof data === 'string' ? JSON.parse(data) : data;
                     if (action === 'update_ui') renderUI(parsed);
                     if (action === 'folder_selected') updateFolder(parsed);
-                    // No more status handling needed here
                 } catch (e) {
                     console.error(e);
                 }
@@ -63,9 +79,15 @@ function refreshData() { sendToFusion('refresh_data'); }
 
 let timeout = null;
 function triggerUpdate() {
+    // Local UI update happens always (fast)
     updateFilenamePreview();
+    
+    // Gate the Fusion update
+    if (!isLivePreview) return;
+
     const text = document.getElementById('nameInput').value;
     const height = document.getElementById('heightInput').value;
+    
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         sendToFusion('update_text', { text: text, height: height });
@@ -85,6 +107,7 @@ function renderUI(data) {
     currentData = data;
     
     const nameIn = document.getElementById('nameInput');
+    // Only update input if empty (on load) to avoid cursor jumping
     if (!nameIn.value && data.current_text) nameIn.value = data.current_text;
     
     const heightIn = document.getElementById('heightInput');
@@ -103,7 +126,17 @@ function renderUI(data) {
                 activeStyle = bg.name.replace("BG_", "");
             }
             row.innerHTML = `<div class="radio-circle">${bg.isActive ? '●' : ''}</div><span>${bg.name}</span>`;
-            row.onclick = () => { sendToFusion('set_active_bg', { bg_name: bg.name }); };
+            
+            // Allow clicking only if preview is ON (or warn user)
+            row.onclick = () => { 
+                if (!isLivePreview) {
+                    // Optional: You could allow queuing BG changes, but standardizing on "Preview Required" is safer
+                    alert("Please enable Live Preview to change styles.");
+                    return;
+                }
+                sendToFusion('set_active_bg', { bg_name: bg.name }); 
+            };
+            
             list.appendChild(row);
         });
     }
@@ -121,6 +154,12 @@ function updateFilenamePreview() {
 }
 
 function doExport() {
+    // GUARD: Ensure user has previewed/synced before exporting
+    if (!isLivePreview) {
+        alert("Please enable Live Preview to confirm your design settings before exporting.");
+        return;
+    }
+
     const folder = currentFolder;
     const filename = document.getElementById('filenameInput').value;
     const formats = [];
@@ -131,6 +170,5 @@ function doExport() {
         return;
     }
     
-    // Just send the command, no local UI changes needed
     sendToFusion('do_export', { folder: folder, formats: formats, filename: filename });
 }

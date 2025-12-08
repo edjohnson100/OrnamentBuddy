@@ -5,62 +5,77 @@
     <title>Ornament Buddy</title>
 </head>
 <body>
-    <div class="header">
-        <h2>Ornament Buddy</h2>
+    <form novalidate onsubmit="return false;">
         
-        <div class="theme-switch-wrapper">
-            <label class="theme-switch" for="theme-checkbox">
-                <input type="checkbox" id="theme-checkbox" />
-                <div class="slider"></div>
-            </label>
-            <span class="toggle-label">Dark</span>
-        </div>
-    </div>
+        <div class="header">
+            <h2>Ornament Buddy</h2>
+            
+            <div class="controls-group" style="display:flex; flex-direction:column; align-items:flex-end; gap:5px;">
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-checkbox">
+                        <input type="checkbox" id="theme-checkbox" />
+                        <div class="slider"></div>
+                    </label>
+                    <span class="toggle-label" style="width:70px; text-align:right;">Dark Mode</span>
+                </div>
 
-    <div class="section">
-        <div class="section-header"><h3>1. Personalization</h3></div>
-        
-        <div class="input-group-vert">
-            <label>Name (Text)</label>
-            <input type="text" id="nameInput" placeholder="Enter Name..." autocomplete="off">
-        </div>
-        <div class="input-group-vert">
-            <label>Font Height (mm)</label>
-            <input type="number" id="heightInput" value="10" step="0.5">
-        </div>
-    </div>
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="preview-checkbox">
+                        <input type="checkbox" id="preview-checkbox" checked />
+                        <div class="slider"></div>
+                    </label>
+                    <span class="toggle-label" style="width:70px; text-align:right;">Live Preview</span>
+                </div>
 
-    <div class="section">
-        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
-            <h3>2. Style (BG Groups)</h3>
-            <button class="icon-btn" id="refreshBtn" title="Rescan Model">↻</button>
-        </div>
-        <div id="bgList" class="radio-list">
-            <div style="padding:10px; color:#888;">Scanning...</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header"><h3>3. Export</h3></div>
-        
-        <div class="folder-row">
-            <div id="folderPath" class="path-display">No folder selected</div>
-            <button id="browseBtn" class="secondary-btn">Browse</button>
+            </div>
         </div>
 
-        <div class="format-row">
-            <label><input type="checkbox" value="stl" checked> STL</label>
-            <label><input type="checkbox" value="3mf"> 3MF</label>
-            <label><input type="checkbox" value="step"> STEP</label>
-        </div>
-        
-        <div class="input-group-vert">
-             <label>Filename</label>
-             <input type="text" id="filenameInput" placeholder="Filename...">
+        <div class="section">
+            <div class="section-header"><h3>1. Personalization</h3></div>
+            
+            <div class="input-group-vert">
+                <label>Name (Text)</label>
+                <input type="text" id="nameInput" placeholder="Enter Name..." autocomplete="off">
+            </div>
+            <div class="input-group-vert">
+                <label>Font Height (mm)</label>
+                <input type="number" id="heightInput" value="10" step="0.5">
+            </div>
         </div>
 
-        <button id="exportBtn" class="primary-btn">EXPORT FILES</button>
-    </div>
+        <div class="section">
+            <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h3>2. Style (BG Groups)</h3>
+                <button class="icon-btn" id="refreshBtn" title="Rescan Model">↻</button>
+            </div>
+            <div id="bgList" class="radio-list">
+                <div style="padding:10px; color:#888;">Scanning...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header"><h3>3. Export</h3></div>
+            
+            <div class="folder-row">
+                <div id="folderPath" class="path-display">No folder selected</div>
+                <button id="browseBtn" class="secondary-btn">Browse</button>
+            </div>
+
+            <div class="format-row">
+                <label><input type="checkbox" value="stl" checked> STL</label>
+                <label><input type="checkbox" value="3mf"> 3MF</label>
+                <label><input type="checkbox" value="step"> STEP</label>
+            </div>
+            
+            <div class="input-group-vert">
+                 <label>Filename</label>
+                 <input type="text" id="filenameInput" placeholder="Filename...">
+            </div>
+
+            <button id="exportBtn" class="primary-btn">EXPORT FILES</button>
+        </div>
+    </form>
 
     <script src="script.js"></script>
 </body>
