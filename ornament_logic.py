@@ -104,10 +104,14 @@ def export_files(folder_path, formats, base_filename, palette):
     exportMgr = design.exportManager
     root = design.rootComponent
     
-    # NOTE: 'palette' argument is kept for compatibility but ignored.
+    # 1. Validation: Check if any format is selected
+    if not formats or len(formats) == 0:
+        ui.messageBox("Please select one or more output file formats.", "Export Warning")
+        return
 
+    # 2. Validation: Check Folder
     if not os.path.exists(folder_path):
-        ui.messageBox("Error: Invalid Folder")
+        ui.messageBox("Error: Output folder not found.", "Export Error")
         return
 
     safe_name = "".join([c for c in base_filename if c.isalpha() or c.isdigit() or c in " ._-"]).strip()
@@ -142,10 +146,17 @@ def export_files(folder_path, formats, base_filename, palette):
             exportMgr.execute(stepOptions)
             exported_files.append(fname)
             
-        # Show Native Message Box
+        # Reset Palette Status (Optional visual cleanup)
+        if palette:
+            palette.sendInfoToHTML('export_complete', "Ready")
+            adsk.doEvents()
+
+        # Build Success Message
         msg = "Export Successful!\n\nFiles created:\n"
         for f in exported_files:
             msg += f"- {f}\n"
+        
+        msg += f"\nExported to:\n{folder_path}"
         
         ui.messageBox(msg, "Ornament Export")
 

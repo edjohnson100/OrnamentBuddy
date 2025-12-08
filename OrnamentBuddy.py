@@ -80,9 +80,7 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 if palette: palette.sendInfoToHTML('update_ui', payload)
 
             elif action == 'update_text':
-                # Updates text content and height
                 ornament_logic.update_text_entity(data.get('text'), data.get('height'))
-                # No full rescan needed for speed, but good for confirmation
             
             elif action == 'set_active_bg':
                 payload = ornament_logic.set_active_bg(data.get('bg_name'))
@@ -90,20 +88,20 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
 
             elif action == 'select_folder':
                 folder_path = ornament_logic.pick_folder_dialog()
-                if palette: palette.sendInfoToHTML('folder_selected', folder_path)
+                # --- FIX IS HERE ---
+                # We use json.dumps() to wrap the path in quotes (e.g. "C:/Path")
+                # so the JavaScript JSON.parse() doesn't crash.
+                if palette: 
+                    palette.sendInfoToHTML('folder_selected', json.dumps(folder_path))
 
             elif action == 'do_export':
-                # We now pass 'palette' so the logic file can talk back to the UI
+                # Pass 'palette' so logic can reset the status message when done
                 ornament_logic.export_files(
                     data.get('folder'),
                     data.get('formats'), 
                     data.get('filename'),
-                    palette  # <--- This was missing!
+                    palette
                 )
-                # Note: We don't need to send 'export_complete' here anymore
-                # because export_files() sends it directly when it finishes.
-                
-                #if palette: palette.sendInfoToHTML('export_complete', result)
 
         except:
             if ui: ui.messageBox('HTML Event Failed:\n{}'.format(traceback.format_exc()))
