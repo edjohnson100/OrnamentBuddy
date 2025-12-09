@@ -4,9 +4,9 @@
 <img src="OrnamentBuddyAppIcon.png" alt="Ornament Buddy Icon" style="width:33%; height:auto;">
 
 ## Introduction: The "Why" and "What"
-I created this tool because I wanted a way to batch out several ornaments with different text and design elements in a single session. Manually editing a sketch to change a name, then hunting through the timeline to suppress and unsuppress different background patterns for every single ornament order is at best tedious. I built this tool because I wanted to spend less time clicking through menus and more time creating the files needed for printing.
+Let's be honest: manually editing a sketch to change a name, then hunting through the timeline to suppress and unsuppress different background patterns for every single ornament order is a tedious nightmare. I built this tool because I wanted to spend less time clicking through menus and more time printing.
 
-**Ornament Buddy** is a dedicated Palette for Fusion that acts as a "remote control" for your design. It links directly to specific sketches and timeline groups, allowing you to configure unique ornaments in seconds.
+**Ornament Buddy** is a dedicated Palette for Fusion 360 that acts as a "remote control" for your design. It links directly to specific sketches and timeline groups, allowing you to configure unique ornaments in seconds.
 
 * **Instant Text Updates:** Update the name and font height without ever entering the Sketch environment.
 * **One-Click Styling:** Switch between different background patterns (Timeline Groups) instantly.
@@ -48,7 +48,7 @@ For the add-in to work, your Fusion design needs two specific things:
 Click the **Ornament Buddy** button in the Modify panel to open the palette.
 
 * **Name (Text):** Type a name here to instantly update the `nameText` sketch.
-* **Font Height (mm):** Adjusts the size of the text (in mm).
+* **Font Height:** Adjusts the size of the text (in mm).
 * **Style List:** Shows all timeline groups that start with `BG_`. Clicking one will unsuppress that group and suppress all others.
 * **Export:** Select your output folder and file formats (STL, 3MF, STEP). The filename is auto-generated based on the Name and Style you selected.
 
@@ -56,7 +56,7 @@ Click the **Ornament Buddy** button in the Modify panel to open the palette.
 
 For the fellow coders and makers out there, here is how Ornament Buddy was built:
 
-* **Language:** Python (Fusion API)
+* **Language:** Python (Fusion 360 API)
 * **Interface:** HTML/CSS/JavaScript (Palette based)
 * **Data Handling:** JSON for communicating between the Python backend and the JavaScript frontend.
 
@@ -71,5 +71,5 @@ For the fellow coders and makers out there, here is how Ornament Buddy was built
 
 ***
 
-*Happy Making!*. 
+*Happy Making!*  
 *— EdJ*
