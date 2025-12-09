@@ -71,5 +71,5 @@ For the fellow coders and makers out there, here is how Ornament Buddy was built
 
 ***
 
-*Happy Making!*
+*Happy Making!*  
 *— EdJ*
