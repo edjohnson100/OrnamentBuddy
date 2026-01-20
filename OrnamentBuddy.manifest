@@ -1,14 +1,12 @@
 {
-	"autodeskProduct":	"Fusion",
-	"type":	"addin",
-	"id":	"FCFF07C9-CF83-4ED8-ACEA-873A79F3D68A",
-	"author":	"Ed Johnson (Making With An EdJ)",
-	"description":	{
-		"":	"Rapidly configure and export personalized ornaments."
-	},
-	"version":	"1.0.0",
-	"runOnStartup":	false,
-	"supportedOS":	"windows|mac",
-	"editEnabled":	true,
-	"iconFilename":	"OrnamentBuddyAppIcon.png"
+	"autodeskProduct": "Fusion",
+	"type": "addin",
+	"id": "FCFF07C9-CF83-4ED8-ACEA-873A79F3D68A",
+	"author": "Ed Johnson - Making With An EdJ",
+	"description": "Batch configuration and export tool for personalized ornaments. | Key Features: Dynamic text updating, background/style switching, folder selection, and multi-format batch export. | Context: Custom manufacturing and personalization workflows.",
+	"version": "1.1.0",
+	"runOnStartup": false,
+	"supportedOS": "windows|mac",
+	"editEnabled": true,
+	"iconFilename": "OrnamentBuddyAppIcon.png"
 }
